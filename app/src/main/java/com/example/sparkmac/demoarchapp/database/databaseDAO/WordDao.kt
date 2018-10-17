@@ -1,4 +1,4 @@
-package com.example.sparkmac.demoarchapp.database.database.databaseDAO
+package com.example.sparkmac.demoarchapp.database.databaseDAO
 
 import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.Dao
@@ -19,4 +19,8 @@ interface WordDao {
 
     @Query("SELECT * from word_table ORDER BY word ASC")
     fun getAllWords(): LiveData<List<Word>>
+
+
+    @Query(  "select count(*) from word_table WHERE word_table.word = :rowvalue")
+    fun duplicateRows(rowvalue:String):Long
 }

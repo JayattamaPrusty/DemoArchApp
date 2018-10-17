@@ -8,11 +8,29 @@
     tools:context=".WordActivity"
     tools:showIn="@layout/activity_word">
 
-    <android.support.v7.widget.RecyclerView
+
+    <com.cooltechworks.views.shimmer.ShimmerRecyclerView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:shimmer_demo_child_count="10"
+        app:shimmer_demo_grid_child_count="2"
+        tools:listitem="@layout/recyclerview_item"
+        app:shimmer_demo_layout="@layout/layout_demo"
+        app:shimmer_demo_layout_manager_type="linear_vertical"
+        app:shimmer_demo_angle="20">
+
+
+    </com.cooltechworks.views.shimmer.ShimmerRecyclerView>
+
+
+
+  <!--  <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/buttonLabel"
-        tools:listitem="@layout/recyclerview_item" />
+        tools:listitem="@layout/recyclerview_item" />-->
 
 </android.support.constraint.ConstraintLayout>

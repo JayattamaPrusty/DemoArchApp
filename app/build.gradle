@@ -42,4 +42,8 @@ dependencies {
 // Lifecycle components
     implementation "android.arch.lifecycle:extensions:$rootProject.archLifecycleVersion"
     kapt "android.arch.lifecycle:compiler:$rootProject.archLifecycleVersion"
+
+
+    //shimmer recyclerview
+    implementation 'com.github.sharish:ShimmerRecyclerView:v1.3'
 }

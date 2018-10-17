@@ -16,7 +16,12 @@ import android.os.Bundle
 import android.support.annotation.Nullable
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.view.Menu
 import android.view.View
+import com.cooltechworks.views.shimmer.ShimmerRecyclerView
+import android.R.menu
+import android.view.MenuInflater
+import android.view.MenuItem
 
 
 class WordActivity : AppCompatActivity() {
@@ -32,7 +37,7 @@ class WordActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
+        val recyclerView = findViewById<ShimmerRecyclerView>(R.id.recyclerview)
         val adapter = WordListAdapter(this)
         recyclerView.setAdapter(adapter)
         recyclerView.setLayoutManager(LinearLayoutManager(this))
@@ -51,10 +56,36 @@ class WordActivity : AppCompatActivity() {
         })
 
         val fab = findViewById<FloatingActionButton>(R.id.fab)
+
+
         fab.setOnClickListener(View.OnClickListener {
             val intent = Intent(this, NewWordActivity::class.java)
             startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE)
         })
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        val id = item.itemId
+
+
+        if (id == R.id.delete) {
+
+            mWordViewModel!!.deleteAll()
+
+            return true
+        }
+
+        return super.onOptionsItemSelected(item)
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.optionsmenu, menu)
+        return true
     }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

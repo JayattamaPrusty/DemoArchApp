@@ -6,8 +6,10 @@ import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.content.Context
 import android.os.AsyncTask
-import com.example.sparkmac.demoarchapp.database.database.databaseDAO.WordDao
+import com.example.sparkmac.demoarchapp.database.databaseDAO.WordDao
 import com.example.sparkmac.demoarchapp.database.databaseEntity.Word
+
+
 
 @Database(entities = arrayOf(Word::class), version = 1)
 abstract class WordRoomDatabase : RoomDatabase() {
@@ -18,25 +20,40 @@ abstract class WordRoomDatabase : RoomDatabase() {
      * Populate the database in the background.
      * If you want to start with more words, just add them.
      */
+
+
+
     private class PopulateDbAsync internal constructor(db: WordRoomDatabase) : AsyncTask<Void, Void, Void>() {
 
         private val mDao: WordDao
 
         init {
             mDao = db.wordDao()
+
         }
 
         override fun doInBackground(vararg params: Void): Void? {
             // Start the app with a clean database every time.
             // Not needed if you only populate on creation.
 
+            //mDao.deleteAll()
 
-            mDao.deleteAll()
 
             var word = Word("Hello")
-            mDao.insert(word)
+
+            if(mDao.duplicateRows(word.getWord())<=0){
+
+                mDao.insert(word)
+
+            }
             word = Word("World")
-            mDao.insert(word)
+
+            if(mDao.duplicateRows(word.getWord())<=0){
+
+                mDao.insert(word)
+
+            }
+
             return null
         }
     }
@@ -46,6 +63,7 @@ abstract class WordRoomDatabase : RoomDatabase() {
         // marking the instance as volatile to ensure atomic access to the variable
         @Volatile
         private var INSTANCE: WordRoomDatabase? = null
+
 
         internal fun getDatabase(context: Context): WordRoomDatabase? {
             if (INSTANCE == null) {

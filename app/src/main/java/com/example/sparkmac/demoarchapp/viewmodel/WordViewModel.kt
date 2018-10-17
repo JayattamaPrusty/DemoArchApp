@@ -7,7 +7,7 @@ import android.arch.lifecycle.LiveData
 import com.example.sparkmac.demoarchapp.repository.WordRepository
 
 
-public class WordViewModel(application: Application) : AndroidViewModel(application) {
+class WordViewModel(application: Application) : AndroidViewModel(application) {
 
     private val mRepository: WordRepository
     // Using LiveData and caching what getAlphabetizedWords returns has several benefits:
@@ -26,6 +26,12 @@ public class WordViewModel(application: Application) : AndroidViewModel(applicat
     }
 
     internal fun insert(word: Word) {
+
         mRepository.insert(word)
+    }
+
+    internal fun deleteAll() {
+
+        mRepository.deleteAll()
     }
 }
