@@ -24,6 +24,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 
 
+
 class WordActivity : AppCompatActivity() {
 
     val NEW_WORD_ACTIVITY_REQUEST_CODE = 1
