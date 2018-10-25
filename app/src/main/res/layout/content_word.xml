@@ -1,28 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/content_word"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".WordActivity"
     tools:showIn="@layout/activity_word">
 
 
-    <com.cooltechworks.views.shimmer.ShimmerRecyclerView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:shimmer_demo_child_count="10"
-        app:shimmer_demo_grid_child_count="2"
-        tools:listitem="@layout/recyclerview_item"
-        app:shimmer_demo_layout="@layout/layout_demo"
-        app:shimmer_demo_layout_manager_type="linear_vertical"
-        app:shimmer_demo_angle="20">
 
-
-    </com.cooltechworks.views.shimmer.ShimmerRecyclerView>
 
 
 
@@ -33,4 +22,4 @@
         android:background="@color/buttonLabel"
         tools:listitem="@layout/recyclerview_item" />-->
 
-</android.support.constraint.ConstraintLayout>
+</FrameLayout>

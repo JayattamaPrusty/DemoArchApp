@@ -1,4 +1,4 @@
-
+package com.example.sparkmac.demoarchapp.adapterall
 import android.content.Context
 import com.example.sparkmac.demoarchapp.database.databaseEntity.Word
 import android.widget.TextView
@@ -10,7 +10,7 @@ import android.view.*
 import com.example.sparkmac.demoarchapp.R
 
 
-class WordListAdapter internal constructor(context: Context) : RecyclerView.Adapter<WordListAdapter.WordViewHolder>() {
+class WordListAdapter internal constructor(context: Context?) : RecyclerView.Adapter<WordListAdapter.WordViewHolder>() {
 
     private val mInflater: LayoutInflater
     private var mWords: List<Word>? = null // Cached copy of words

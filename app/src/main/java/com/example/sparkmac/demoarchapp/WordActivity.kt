@@ -7,22 +7,19 @@ import android.support.v4.app.ActivityCompat.startActivityForResult
 import android.support.design.widget.FloatingActionButton
 import com.example.sparkmac.demoarchapp.viewmodel.WordViewModel
 import android.arch.lifecycle.ViewModelProviders
-import android.support.v7.widget.LinearLayoutManager
-import WordListAdapter
+
 import android.app.Activity
-import android.arch.lifecycle.Observer
-import android.support.v7.widget.RecyclerView
+
 import android.os.Bundle
-import android.support.annotation.Nullable
+
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.View
-import com.cooltechworks.views.shimmer.ShimmerRecyclerView
-import android.R.menu
-import android.view.MenuInflater
-import android.view.MenuItem
 
+import android.view.MenuItem
+import com.example.sparkmac.demoarchapp.fragments.NewWordFragment
+import com.example.sparkmac.demoarchapp.fragments.WordFragment
 
 
 class WordActivity : AppCompatActivity() {
@@ -38,30 +35,23 @@ class WordActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        val recyclerView = findViewById<ShimmerRecyclerView>(R.id.recyclerview)
-        val adapter = WordListAdapter(this)
-        recyclerView.setAdapter(adapter)
-        recyclerView.setLayoutManager(LinearLayoutManager(this))
+
+        showWordFragment(this)
+
 
         // Get a new or existing ViewModel from the ViewModelProvider.
         mWordViewModel = ViewModelProviders.of(this).get(WordViewModel::class.java)
 
-        // Add an observer on the LiveData returned by getAlphabetizedWords.
-        // The onChanged() method fires when the observed data changes and the activity is
-        // in the foreground.
-        mWordViewModel!!.getAllWords().observe(this, Observer<List<Word>> { words ->
-            // Update the cached copy of the words in the adapter.
-            if (words != null) {
-                adapter.setWords(words)
-            }
-        })
+
 
         val fab = findViewById<FloatingActionButton>(R.id.fab)
 
 
         fab.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this, NewWordActivity::class.java)
-            startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE)
+           /* val intent = Intent(this, NewWordActivity::class.java)
+            startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE)*/
+
+            showNewWordFragment(this)
         })
     }
 
@@ -89,17 +79,34 @@ class WordActivity : AppCompatActivity() {
         return true
     }
 
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            val word = Word(data!!.getStringExtra(NewWordActivity.EXTRA_REPLY))
-            mWordViewModel!!.insert(word)
-        } else {
-            Toast.makeText(
-                    applicationContext,
-                    R.string.empty_not_saved,
-                    Toast.LENGTH_LONG).show()
-        }
+
+     fun showWordFragment( activity:Activity){
+
+        val theFragment = WordFragment()
+
+
+       // val theTag = String.format(TAG_FRAGMENT, mFragmentNum)
+
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.content_word, theFragment)
+        transaction.commit()
+
+
+    }
+
+
+    fun showNewWordFragment( activity:Activity){
+
+        val theFragment = NewWordFragment()
+
+
+        // val theTag = String.format(TAG_FRAGMENT, mFragmentNum)
+
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.content_word, theFragment)
+        transaction.commit()
+
+
     }
 }
