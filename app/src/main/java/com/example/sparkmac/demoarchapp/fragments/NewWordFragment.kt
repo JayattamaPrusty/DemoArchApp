@@ -1,20 +1,23 @@
 package com.example.sparkmac.demoarchapp.fragments
 
 
-import android.app.Activity
+
+import android.annotation.SuppressLint
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Intent
+
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
-import android.text.TextUtils
+
 import android.view.LayoutInflater
 import android.view.View
+
+
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import com.example.sparkmac.demoarchapp.NewWordActivity
+
 
 import com.example.sparkmac.demoarchapp.R
 import com.example.sparkmac.demoarchapp.WordActivity
@@ -41,8 +44,10 @@ class NewWordFragment : Fragment() {
         // Inflate the layout for this fragment
         val view=inflater.inflate(R.layout.fragment_new_word, container, false)
 
+
+
         // Get a new or existing ViewModel from the ViewModelProvider.
-        mWordViewModel = ViewModelProviders.of(this).get(WordViewModel::class.java)
+        mWordViewModel   = ViewModelProviders.of(this).get(WordViewModel::class.java)
 
         mEditWordView = view.findViewById(R.id.edit_word)
 
@@ -61,7 +66,7 @@ class NewWordFragment : Fragment() {
                     val activity = activity
                     if (activity is WordActivity) {
                         val myactivity = activity as WordActivity?
-                        myactivity!!.showWordFragment(myactivity)
+                        myactivity!!.showWordFragment(myactivity, savedInstanceState)
 
                         val word = Word(mEditWordView?.text.toString())
                         mWordViewModel!!.insert(word)
@@ -80,5 +85,10 @@ class NewWordFragment : Fragment() {
         return view
     }
 
-
+    @SuppressLint("RestrictedApi")
+    override fun onResume() {
+        super.onResume()
+        val fab = activity!!.findViewById(R.id.fab) as FloatingActionButton
+        fab.visibility = View.INVISIBLE
+    }
 }

@@ -1,9 +1,6 @@
 package com.example.sparkmac.demoarchapp
 
-import android.widget.Toast
-import com.example.sparkmac.demoarchapp.database.databaseEntity.Word
-import android.content.Intent
-import android.support.v4.app.ActivityCompat.startActivityForResult
+
 import android.support.design.widget.FloatingActionButton
 import com.example.sparkmac.demoarchapp.viewmodel.WordViewModel
 import android.arch.lifecycle.ViewModelProviders
@@ -12,12 +9,15 @@ import android.app.Activity
 
 import android.os.Bundle
 
+
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
+import android.util.Log
+
 import android.view.Menu
 import android.view.View
 
 import android.view.MenuItem
+
 import com.example.sparkmac.demoarchapp.fragments.NewWordFragment
 import com.example.sparkmac.demoarchapp.fragments.WordFragment
 
@@ -28,15 +28,21 @@ class WordActivity : AppCompatActivity() {
 
     private var mWordViewModel: WordViewModel? = null
 
+    override fun onDestroy() {
+        super.onDestroy()
+
+        Log.i("WordActivity","destroy")
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_word)
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        val toolbar = findViewById<android.support.v7.widget.Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
 
-        showWordFragment(this)
+        showWordFragment(this,savedInstanceState)
 
 
         // Get a new or existing ViewModel from the ViewModelProvider.
@@ -51,9 +57,11 @@ class WordActivity : AppCompatActivity() {
            /* val intent = Intent(this, NewWordActivity::class.java)
             startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE)*/
 
-            showNewWordFragment(this)
+            showNewWordFragment(this,savedInstanceState)
         })
     }
+
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here. The action bar will
@@ -81,31 +89,40 @@ class WordActivity : AppCompatActivity() {
 
 
 
-     fun showWordFragment( activity:Activity){
+     fun showWordFragment(activity: Activity, savedInstanceState: Bundle?){
 
-        val theFragment = WordFragment()
+        var theFragment = WordFragment()
+         val theTag = "WordFragment"
+         if(savedInstanceState==null){
 
 
-       // val theTag = String.format(TAG_FRAGMENT, mFragmentNum)
+             val transaction = supportFragmentManager.beginTransaction()
+             transaction.replace(R.id.content_word, theFragment,theTag)
+             transaction.commit()
+         }else{
 
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.content_word, theFragment)
-        transaction.commit()
+             theFragment= supportFragmentManager.findFragmentByTag(theTag) as WordFragment
+
+         }
+
 
 
     }
 
 
-    fun showNewWordFragment( activity:Activity){
+    fun showNewWordFragment( activity:Activity,savedInstanceState: Bundle?){
 
-        val theFragment = NewWordFragment()
+        var theFragment1 = NewWordFragment()
+        val theTag = "NewWordFragment"
+        if(savedInstanceState==null){
 
+            val transaction1 = supportFragmentManager.beginTransaction()
+            transaction1.replace(R.id.content_word, theFragment1,theTag)
+            transaction1.commit()
+        }else{
 
-        // val theTag = String.format(TAG_FRAGMENT, mFragmentNum)
-
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.content_word, theFragment)
-        transaction.commit()
+            theFragment1= supportFragmentManager.findFragmentByTag(theTag) as NewWordFragment
+        }
 
 
     }
